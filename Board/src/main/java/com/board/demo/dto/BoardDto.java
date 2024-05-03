@@ -17,25 +17,27 @@ import java.util.Date;
 @JsonIgnoreProperties(value = {"password"})
 public class BoardDto {
     private Long id;
-    private String type;
     private String title;
     private String content;
-    private String writer;
+    private String user;
     private int viewcnt;
-    private LocalDate date;
-    private String password;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     public Long getId() { return id; }
-    public String getType() { return type; }
     public String getTitle() { return title; }
     public String getContent() { return content; }
-    public String getWriter() { return writer; }
+    public String getUser() { return user; }
     public int getViewcnt() { return viewcnt; }
-    public LocalDate getDate() { return date; }
-    public String getPassword() { return password; }
+    public LocalDateTime getcreatedAt() { return createdAt; }
+    public LocalDateTime getmodifiedAt() { return modifiedAt; }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setcreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setmodifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 
 }

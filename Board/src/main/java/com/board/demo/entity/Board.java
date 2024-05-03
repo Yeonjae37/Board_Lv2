@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -31,32 +32,32 @@ public class Board {
     private String content;
 
     @Column
-    private String writer;
+    private String user;
 
     @ColumnDefault("0")
     private int viewcnt;
 
     @Column
-    private LocalDate date;
+    private LocalDateTime createdAt;
 
     @Column
-    private String password;
+    private LocalDateTime modifiedAt;
+
 
     public Board(BoardDto boardDto){
         this.id = boardDto.getId();
-        this.type = boardDto.getType();
         this.title = boardDto.getTitle();
-        this.writer = boardDto.getWriter();
+        this.user = boardDto.getUser();
         this.content = boardDto.getContent();
         this.viewcnt = boardDto.getViewcnt();
-        this.date = boardDto.getDate();
-        this.password = boardDto.getPassword();
+        this.createdAt = boardDto.getcreatedAt();
+        this.modifiedAt = boardDto.getmodifiedAt();
     }
 
     public void update(BoardDto boardDto) {
         this.title = boardDto.getTitle();
-        this.type = boardDto.getType();
         this.content = boardDto.getContent();
-        this.date = LocalDate.now();
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
     }
 }

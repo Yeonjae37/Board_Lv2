@@ -4,6 +4,8 @@ import com.board.demo.entity.User;
 import com.board.demo.dto.UserDto;
 import com.board.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,44 +18,49 @@ import static java.util.regex.Pattern.matches;
 public class UserService {
     private final UserRepository userRepository;
 
-    public boolean checkValidCondition(UserDto userDto){
-        //'UserDto' 타입의 객체를 메소드의 인자로 받아서 안에서 필요한 것만 추출하며 유효성 검사 실시
-        String userid = userDto.getUserId();
-        String userpw = userDto.getUserPw();
-        String userpwcheck = userDto.getUserPwCheck();
-
-        boolean checkValid = true;
-        String pattern = "^[a-zA-Z0-9]*$";
-        if ( !(matches(pattern,userid) && userid.length() >= 4 && userid.length() <= 10)){
-            System.out.println("아이디 형식이 잘못 되었습니다.");
-            checkValid = false;
-        }
-        else if( !(matches(pattern,userpw) && userpw.length() >= 8 && userpw.length() <= 16)) {
-            System.out.println("비밀번호 형식이 잘못 되었습니다.");
-            checkValid = false;
-        }
-        else if( !userpw.equals(userpwcheck) ){
-            System.out.println("비밀번호가 일치하지 않습니다.");
-            checkValid = false;
-        }
-        return checkValid;
+    public UserDto fromEntity(User user){
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setUserEmail(user.getUserEmail());
+        userDto.setUserId(user.getUserId());
+        userDto.setUserPw(user.getUserPw());
+        return userDto;
     }
 
-    public Boolean join(UserDto userDto){
-        if(!checkValidCondition(userDto)){
-            //throw new IllegalArgumentException("회원가입 정보가 정확하지 않습니다.");
-            return false;
-        };
+    public String checkValidCondition(UserDto userDto) {
+        //'UserDto' 타입의 객체를 메소드의 인자로 받아서 안에서 필요한 것만 추출하며 유효성 검사 실시
+        String userId = userDto.getUserId();
+        String userPw = userDto.getUserPw();
 
+        //사용자 id 중복 확인
         Optional<User> found = userRepository.findByUserId(userDto.getUserId());
-        if(found.isPresent()){
-            //throw new IllegalArgumentException("중복된 사용자 id가 존재합니다.");
-            System.out.println("중복된 사용자 id가 존재합니다.");
-            return false;
+        if (found.isPresent()) {
+            return "중복된 사용자 id가 존재합니다.";
         }
+
+        String idPattern = "^[a-z0-9]*$"; //영문 소문자, 0~9
+        String pwPattern = "^[a-zA-Z0-9]*$"; //영문 대문자, 영문 소문자, 0~9
+        if (!(matches(idPattern, userId))) {
+            return "아이디는 영문 소문자와 숫자로만 이루어져야합니다.";
+        } else if (!(userId.length() >= 4) || !(userId.length() <= 10)) {
+            return "아이디는 4자 이상, 10자 이하로 이루어져야합니다.";
+        } else if (!(matches(pwPattern, userPw))) {
+            return "비밀번호는 영문 대소문자와 숫자로만 이루어져야합니다.";
+        } else if (!(userPw.length() >= 8) || !(userPw.length() <= 15)) {
+            return "비밀번호는 8자 이상, 15자 이하로 이루어져야합니다.";
+        }
+        return null;
+    }
+
+    public ResponseEntity<?> register(UserDto userDto){
+        String validResponse = checkValidCondition(userDto);
+       if (validResponse != null){
+           return ResponseEntity.badRequest().body(validResponse);
+       }
         User user = new User(userDto);
         userRepository.save(user);
-        return true;
+        userDto = fromEntity(user);
+        return ResponseEntity.ok(userDto);
     }
 
     public boolean login(String userId, String userPw) {

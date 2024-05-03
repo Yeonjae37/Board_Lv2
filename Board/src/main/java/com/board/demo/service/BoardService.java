@@ -30,13 +30,12 @@ public class BoardService {
     public BoardDto fromEntity(Board board) {
         BoardDto boardDto = new BoardDto();
         boardDto.setId(board.getId());
-        boardDto.setType(board.getType());
         boardDto.setTitle(board.getTitle());
         boardDto.setContent(board.getContent());
-        boardDto.setWriter(board.getWriter());
+        boardDto.setUser(board.getUser());
         boardDto.setViewcnt(board.getViewcnt());
-        boardDto.setDate(board.getDate());
-        boardDto.setPassword(board.getPassword());
+        boardDto.setcreatedAt(board.getCreatedAt());
+        boardDto.setmodifiedAt(board.getModifiedAt());
         return boardDto;
     }
 
@@ -51,8 +50,8 @@ public class BoardService {
     }
 
     public ResponseEntity<?> addBoard(BoardDto boardDto) {
-        LocalDate currentDateTime = LocalDate.now();
-        boardDto.setDate(currentDateTime);
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        boardDto.setcreatedAt(currentDateTime);
         Board board = new Board(boardDto);
         board = boardRepository.save(board);
         boardDto = fromEntity(board);
@@ -81,9 +80,6 @@ public class BoardService {
         Board board = boardOptional.get();
         //Optional 은 null이 될 수 있는 객체를 감싸는데 사용되는데 Optional 객체에서 직접 getPassword를
         // 호출 할 수 없기 때문에 메서드를 호출하기 전에 Optional에서 실제 Board 객체를 추출해야 함
-        if (!board.getPassword().equals(boardDto.getPassword())) {
-            return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다.");
-        }
         board.update(boardDto);
         return ResponseUtil.createResponse(boardDto, StatusEnum.OK, "게시글 수정 성공", HttpStatus.OK);
     }
@@ -96,16 +92,8 @@ public class BoardService {
             System.out.println("내용이 비어있습니다.");
             return false;
         }
-        else if (boardDto.getWriter() == null) {
+        else if (boardDto.getUser() == null) {
             System.out.println("작성자가 비어있습니다.");
-            return false;
-        }
-        else if (boardDto.getType() == null) {
-            System.out.println("타입이 비어있습니다.");
-            return false;
-        }
-        else if (boardDto.getPassword() == null) {
-            System.out.println("게시글 비밀번호가 비어있습니다.");
             return false;
         }
         else {

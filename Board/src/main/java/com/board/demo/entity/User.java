@@ -30,21 +30,11 @@ public class User {
     @JsonProperty("user_pw")
     private String userPw;
 
-    @Column(nullable = false)
-    @JsonProperty("user_name")
-    private String userName;
-
-    @Column
-    @JsonProperty("user_birth")
-    private Date userBirth;
-
     public User(UserDto userDto) {
         this.id = userDto.getId();
         this.userEmail = userDto.getUserEmail();
         this.userId = userDto.getUserId();
         this.userPw = userDto.getUserPw();
-        this.userName = userDto.getUserName();
-        this.userBirth = userDto.getUserBirth();
     }
 
 }

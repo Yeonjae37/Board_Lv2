@@ -9,6 +9,5 @@ import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long>{
     void delete(Board board);
-    @Query("SELECT u.password FROM Board u WHERE u.id = :id")
     String findPasswordById(@Param("id") Long id);
 }

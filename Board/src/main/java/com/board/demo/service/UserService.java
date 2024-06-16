@@ -1,5 +1,6 @@
 package com.board.demo.service;
 
+import com.board.demo.dto.LoginDto;
 import com.board.demo.entity.User;
 import com.board.demo.dto.UserDto;
 import com.board.demo.repository.UserRepository;
@@ -54,22 +55,24 @@ public class UserService {
 
     public ResponseEntity<?> register(UserDto userDto){
         String validResponse = checkValidCondition(userDto);
-       if (validResponse != null){
+        if (validResponse != null){
            return ResponseEntity.badRequest().body(validResponse);
-       }
+        }
         User user = new User(userDto);
         userRepository.save(user);
         userDto = fromEntity(user);
         return ResponseEntity.ok(userDto);
     }
 
-    public boolean login(String userId, String userPw) {
-        Optional<User> userOptional = userRepository.findByUserId(userId);
+    public ResponseEntity<?> login(LoginDto loginDto) {
+        String id = loginDto.getId();
+        String pw = loginDto.getPw();
+        Optional<User> userOptional = userRepository.findByUserId(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             String userPassword = user.getUserPw();
-            return userPw.equals(userPassword);
+            if (pw.equals(userPassword)) return ResponseEntity.ok(loginDto);
         }
-        return false;
+        return ResponseEntity.badRequest().body("no!!!");
     }
 }

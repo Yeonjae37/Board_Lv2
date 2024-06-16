@@ -1,5 +1,6 @@
 package com.board.demo.controller;
 
+import com.board.demo.dto.LoginDto;
 import com.board.demo.service.UserService;
 import com.board.demo.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,10 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserDto userDto){
         return userService.register(userDto);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+        return userService.login(loginDto);
     }
 }

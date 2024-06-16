@@ -22,6 +22,9 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "USER_ID")
+    private Long id2;
+
     @Column
     private String type;
 

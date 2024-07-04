@@ -4,25 +4,30 @@ import com.board.demo.dto.LoginDto;
 import com.board.demo.entity.User;
 import com.board.demo.dto.UserDto;
 import com.board.demo.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.matches;
 
 @Service
-@RequiredArgsConstructor //private final UserRepository userRepository; 여기에 필요한건가봄
-public class UserService {
+@Transactional
+public class UserService{
+
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     public UserDto fromEntity(User user){
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setUserEmail(user.getUserEmail());
         userDto.setUserId(user.getUserId());
         userDto.setUserPw(user.getUserPw());
         return userDto;
@@ -34,8 +39,8 @@ public class UserService {
         String userPw = userDto.getUserPw();
 
         //사용자 id 중복 확인
-        Optional<User> found = userRepository.findByUserId(userDto.getUserId());
-        if (found.isPresent()) {
+        User found = userRepository.findByUserId(userDto.getUserId());
+        if (found != null) {
             return "중복된 사용자 id가 존재합니다.";
         }
 
@@ -58,18 +63,22 @@ public class UserService {
         if (validResponse != null){
            return ResponseEntity.badRequest().body(validResponse);
         }
-        User user = new User(userDto);
+        String password = userDto.getUserPw();
+
+        User user = new User();
+
+        user.setUserId(userDto.getUserId());
+        user.setUserPw(bCryptPasswordEncoder.encode(password));
         userRepository.save(user);
         userDto = fromEntity(user);
         return ResponseEntity.ok(userDto);
     }
 
     public ResponseEntity<?> login(LoginDto loginDto) {
-        String id = loginDto.getId();
-        String pw = loginDto.getPw();
-        Optional<User> userOptional = userRepository.findByUserId(id);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
+        String id = loginDto.getUserId();
+        String pw = loginDto.getUserPw();
+        User user = userRepository.findByUserId(id);
+        if (user != null) {
             String userPassword = user.getUserPw();
             if (pw.equals(userPassword)) return ResponseEntity.ok(loginDto);
         }

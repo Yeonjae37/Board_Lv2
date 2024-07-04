@@ -1,0 +1,14 @@
+
+§
+java:S1192-"fDefine a constant instead of duplicating this literal "ê²Œì‹œê¸€ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤." 3 times.(ÿœ›ıÿÿÿÿJ$34fc8a17-fbe6-44dc-9c18-17ea061095fa
+C
+java:S1452*"&Remove usage of generic wildcard type.(­û˜º8£ÎÁ„2
+C
+java:S14524"&Remove usage of generic wildcard type.(¶ï³¿8¥ÎÁ„2
+H
+java:S1452="&Remove usage of generic wildcard type.(ÒŸÌüÿÿÿÿ8ªÎÁ„2
+C
+java:S1452K"&Remove usage of generic wildcard type.(ıÉÂ¦8µÎÁ„2
+f	java:S106Y"+Replace this use of System.out by a logger.(…²Õ€J$a0f0018e-fde5-48b1-ba67-e53c0ce6a80e
+k	java:S106\"+Replace this use of System.out by a logger.(å·ß³ıÿÿÿÿJ$1155f40c-125d-4581-9c15-7b7e1f5370c2
+k	java:S106`"+Replace this use of System.out by a logger.(ôŸ®‰ùÿÿÿÿJ$548ec937-cc17-4583-a4f4-0c7daee1869c

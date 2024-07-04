@@ -19,23 +19,20 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @Column(nullable = false, unique = true)
-    @JsonProperty("user_email")
-    private String userEmail;
-
     @Column(nullable = false)
-    @JsonProperty("user_id")
     private String userId;
 
     @Column(nullable = false)
-    @JsonProperty("user_pw")
     private String userPw;
+
+    @JsonProperty("role")
+    private String role;
 
     public User(UserDto userDto) {
         this.id = userDto.getId();
-        this.userEmail = userDto.getUserEmail();
         this.userId = userDto.getUserId();
         this.userPw = userDto.getUserPw();
+        this.role = userDto.getRole();
     }
 
 }

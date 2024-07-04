@@ -1,0 +1,17 @@
+
+v
+java:S6837"3Remove this superfluous "@ResponseBody" annotation.(Ü¥¼8¿â÷ë‡2J$21ab580f-468b-42d6-b4a7-a106081051ac
+n
+java:S1452"&Remove usage of generic wildcard type.(¬êÚ øÿÿÿÿ8¥…€ç‡2J$16d2186a-5457-466d-9394-0537febd65f7
+~	java:S125#"<This block of commented-out lines of code should be removed.(Õ€¯¡8Ì°¤ì‡2J$062263e6-ae23-4831-886a-057a660ad8d9
+z
+java:S1128"8Remove this unused import 'com.board.demo.dto.LoginDto'.(†üó'8Î°¤ì‡2J$7e7da0b1-c1f0-45d4-9b4c-bdf05d938293
+
+java:S1128	"FRemove this unused import 'org.springframework.stereotype.Controller'.(øŠ—Öùÿÿÿÿ8Èâ÷ë‡2J$1a78bba6-b781-4e7d-8c94-ecce52a48e8f
+
+java:S1128
+"9Remove this unused import 'org.springframework.ui.Model'.(ê†ıÿÿÿÿ8Êâ÷ë‡2J$fa1e434d-e342-459a-b659-7f1d2f6ad68e
+n
+java:S1128"+Remove this unused import 'java.util.Date'.(¸…¼ü8Îâ÷ë‡2J$c5ffd0e8-3993-4790-ad4f-a1f9fa8a3e04
+x
+java:S1068"0Remove this unused "loginService" private field.(Ûº€÷üÿÿÿÿ8Ú°¤ì‡2J$db366669-a4d0-42c8-b400-2191f8170c0b

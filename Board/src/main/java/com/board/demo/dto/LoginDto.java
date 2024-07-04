@@ -8,22 +8,22 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginDto {
-    private String id;
-    private String pw;
+    private String userId;
+    private String userPw;
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setuserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getPw() {
-        return pw;
+    public String getUserPw() {
+        return userPw;
     }
 
-    public void setPw(String pw) {
-        this.pw = pw;
+    public void setPw(String userPw) {
+        this.userPw = userPw;
     }
 }

@@ -12,15 +12,12 @@ import java.util.Date;
 public class UserDto {
 
     private int id;
-    private String userEmail;
     private String userId;
     private String userPw;
+    private String role;
 
     public int getId() {
         return id;
-    }
-    public String getUserEmail() {
-        return userEmail;
     }
     public String getUserId() {
         return userId;
@@ -28,5 +25,6 @@ public class UserDto {
     public String getUserPw() {
         return userPw;
     }
+    public String getRole() {return role;}
 }
 

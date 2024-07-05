@@ -18,7 +18,7 @@ public enum CustomErrorCode {
     TEMPORARY_SERVER_ERROR(500, "A002", "Temporary server error"),
 
     // Validation Errors
-    PASSWORD_ERROR(400, "V001", "비밀번호가 일치하지 않습니다."),
+    UNVALID_ERROR(400, "V001", "작성자가 일치하지 않습니다."),
     NO_TITLE(400, "V001", "타이틀이 비어있습니다."),
     NO_CONTENT(400, "V002", "내용이 비어있습니다."),
     NO_USER(400, "V003", "작성자가 비어있습니다."),

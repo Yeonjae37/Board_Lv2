@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -62,28 +63,28 @@ public class BoardService {
         return ApiResponseDto.success(HttpStatus.OK.value(), "S001", boardDto);
     }
 
-    public ApiResponseDto<Long> deleteBoard(Long id, String pw) {
-        Optional<Board> board = boardRepository.findById(id);
-        if (!board.isPresent()) {
-            throw new CustomException(CustomErrorCode.RESOURCE_NOT_FOUND);
+    public ApiResponseDto<Long> deleteBoard(Long id, UserDetails userDetails) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.RESOURCE_NOT_FOUND));
+        BoardDto boardDto = fromEntity(board);
+        System.out.println("boardDto = " + boardDto.getUser());
+        System.out.println("userDetails = " + boardDto.getUser());
+        if (!Objects.equals(boardDto.getUser(), userDetails.getUsername())){
+            throw new CustomException(CustomErrorCode.UNVALID_ERROR);
         }
-        String storedPassword = boardRepository.findPasswordById(id);
-        if (!storedPassword.equals(pw)) {
-            throw new CustomException(CustomErrorCode.PASSWORD_ERROR);
-        }
-        boardRepository.delete(board.get());
+        boardRepository.delete(board);
         return ApiResponseDto.success(HttpStatus.OK.value(), "S001", id);
     }
 
     @Transactional
-    public ApiResponseDto<BoardDto> updateBoard(BoardDto boardDto) {
-        Optional<Board> boardOptional = boardRepository.findById(boardDto.getId());
-        if (!boardOptional.isPresent()) {
-            throw new CustomException(CustomErrorCode.RESOURCE_NOT_FOUND);
+    public ApiResponseDto<BoardDto> updateBoard(BoardDto boardDto, UserDetails userDetails) {
+        Board board = boardRepository.findById(boardDto.getId())
+                .orElseThrow(() -> new CustomException(CustomErrorCode.RESOURCE_NOT_FOUND));
+        System.out.println("boardDto = " + board.getUser());
+        System.out.println("userDetails = " + userDetails.getUsername());
+        if (!Objects.equals(board.getUser(), userDetails.getUsername())){
+            throw new CustomException(CustomErrorCode.UNVALID_ERROR);
         }
-        Board board = boardOptional.get();
-        //Optional 은 null이 될 수 있는 객체를 감싸는데 사용되는데 Optional 객체에서 직접 getPassword를
-        // 호출 할 수 없기 때문에 메서드를 호출하기 전에 Optional에서 실제 Board 객체를 추출해야 함
         board.update(boardDto);
         return ApiResponseDto.success(HttpStatus.OK.value(), "S001", boardDto);
     }

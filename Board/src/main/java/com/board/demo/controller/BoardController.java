@@ -43,14 +43,14 @@ public class BoardController {
     }
 
     @ResponseBody
-    @DeleteMapping("/delete/{id}/{pw}")
-    public ApiResponseDto<Long> deleteBoard(@PathVariable("id") Long id, @PathVariable("pw") String pw){
-        return boardService.deleteBoard(id, pw);
+    @DeleteMapping("/delete/{id}")
+    public ApiResponseDto<Long> deleteBoard(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails){
+        return boardService.deleteBoard(id, userDetails);
     }
 
     @ResponseBody
     @PutMapping("/update")
-    public ApiResponseDto<BoardDto> updateBoard(@RequestBody BoardDto boardDto){
-        return boardService.updateBoard(boardDto);
+    public ApiResponseDto<BoardDto> updateBoard(@RequestBody BoardDto boardDto, @AuthenticationPrincipal UserDetails userDetails){
+        return boardService.updateBoard(boardDto, userDetails);
     }
 }

@@ -1,10 +1,14 @@
 
-r	java:S1068"+Replace this use of System.out by a logger.(•’âåùÿÿÿÿ8É½ıˆ2J$dd0b05fd-feb7-4842-ab73-1e52f13007ca
+r	java:S1069"+Replace this use of System.out by a logger.(•’âåùÿÿÿÿ8ş­ƒ’ˆ2J$a03f1d71-bc37-45ec-97ec-f010b86cbb06
+l	java:S106F"+Replace this use of System.out by a logger.(„­ş68úÃÈ–ˆ2J$66ee57fc-3f75-4d21-a5b3-66479f164dc4
+m	java:S106G"+Replace this use of System.out by a logger.(‰™Èä8ûÃÈ–ˆ2J$657d65a0-4eda-4b0a-95b4-23f9d63d0578
+m	java:S106S"+Replace this use of System.out by a logger.(ÔĞÈ¬8ÇöÈ–ˆ2J$d4e45929-e78b-46e4-9692-243b4bc435ee
+r	java:S106T"+Replace this use of System.out by a logger.(ùÏƒ¦şÿÿÿÿ8ÇöÈ–ˆ2J$1134e8a4-038a-492c-a9d8-9d52c9aeaa9c
 
-java:S1128"7Remove this unused import 'com.board.demo.entity.User'.(“ñ×Ùıÿÿÿÿ8§Óÿˆ2J$654ea6d6-7dc8-4511-bde2-97a4f7a89d40
+java:S1128"7Remove this unused import 'com.board.demo.entity.User'.(“ñ×Ùıÿÿÿÿ8´ƒá–ˆ2J$4070ba6c-b372-4dde-840b-c97982b71e35
 †
-java:S1128"DRemove this unused import 'jakarta.servlet.http.HttpServletRequest'.(õ38¨Óÿˆ2J$496d2b58-d497-46ab-9888-ffdb964dcaf8
+java:S1128"DRemove this unused import 'jakarta.servlet.http.HttpServletRequest'.(õ38´ƒá–ˆ2J$8b8a18c4-00f3-45c0-82ce-761e3cb5c550
 Œ
-java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8ªÓÿˆ2J$c2a5b0df-6da0-4301-9af9-c8b9c5316210
+java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8´ƒá–ˆ2J$2abff91d-309d-4157-811f-1e9fdf08665e
 ¤
-java:S1128"aRemove this unused import 'org.springframework.security.core.annotation.AuthenticationPrincipal'.(Øù¢8«Óÿˆ2J$1093c81f-0848-4faf-a58c-280acb701971
+java:S1128"aRemove this unused import 'org.springframework.security.core.annotation.AuthenticationPrincipal'.(Øù¢8´ƒá–ˆ2J$1a0d42b3-a8d3-41a9-8915-625d6c5ca2ee

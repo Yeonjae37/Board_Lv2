@@ -34,7 +34,7 @@ public class Board {
     @ColumnDefault("0")
     private int viewcnt;
 
-    @Column(updatable = false)
+    @Column
     private LocalDateTime createdAt;
 
     @Column
@@ -54,8 +54,6 @@ public class Board {
     public void update(BoardDto boardDto) {
         this.title = boardDto.getTitle();
         this.content = boardDto.getContent();
-        this.user = boardDto.getUser();
-        this.createdAt = LocalDateTime.now();
         this.modifiedAt = LocalDateTime.now();
     }
 }

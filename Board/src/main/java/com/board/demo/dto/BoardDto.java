@@ -21,13 +21,9 @@ public class BoardDto {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-    public Long getId() { return id; }
-    public String getTitle() { return title; }
-    public String getContent() { return content; }
-    public String getUser() { return user; }
-    public int getViewcnt() { return viewcnt; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public LocalDateTime geModifiedAt() { return modifiedAt; }
+    public BoardDto() {
+
+    }
 
     public BoardDto(Board board) {
         this.id = board.getId();

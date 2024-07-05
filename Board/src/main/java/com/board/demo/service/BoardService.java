@@ -77,7 +77,8 @@ public class BoardService {
             throw new CustomException(CustomErrorCode.UNVALID_ERROR);
         }
         board.update(boardDto);
-        return ApiResponseDto.success(HttpStatus.OK.value(), "S001", boardDto);
+        BoardDto boardUpdated = new BoardDto(board);
+        return ApiResponseDto.success(HttpStatus.OK.value(), "S001", boardUpdated);
     }
 
     public void validCondition(BoardDto boardDto) {

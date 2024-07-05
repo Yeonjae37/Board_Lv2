@@ -34,7 +34,7 @@ public class Board {
     @ColumnDefault("0")
     private int viewcnt;
 
-    @Column
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @Column

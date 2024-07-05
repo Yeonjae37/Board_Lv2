@@ -10,6 +10,7 @@ import com.board.demo.exception.CustomException;
 import com.board.demo.repository.BoardRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,26 +21,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    public List<Board> findAllBoards() {
-        return boardRepository.findAll();
-    }
-
-    public BoardDto fromEntity(Board board) {
-        BoardDto boardDto = new BoardDto();
-        boardDto.setId(board.getId());
-        boardDto.setTitle(board.getTitle());
-        boardDto.setContent(board.getContent());
-        boardDto.setUser(board.getUser());
-        boardDto.setViewcnt(board.getViewcnt());
-        boardDto.setCreatedAt(board.getCreatedAt());
-        boardDto.setModifiedAt(board.getModifiedAt());
-        return boardDto;
+    public List<BoardDto> findAllBoards() {
+        List<Board> boardLists = boardRepository.findAllByOrderByCreatedAtDesc();
+        return boardLists.stream().map(BoardDto::new).toList();
+        //List<Board> boardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+        //return boardList;
     }
 
     public ApiResponseDto<BoardDto> getBoard(Long id) {
@@ -48,7 +41,7 @@ public class BoardService {
             throw new CustomException(CustomErrorCode.INVALID_CODE);
         }
         Board board = boardOptional.get();
-        BoardDto boardDto = fromEntity(board);
+        BoardDto boardDto = new BoardDto(board);
         return ApiResponseDto.success(HttpStatus.OK.value(), "S001", boardDto);
     }
 
@@ -59,14 +52,14 @@ public class BoardService {
         boardDto.setUser(userDetails.getUsername());
         Board board = new Board(boardDto);
         board = boardRepository.save(board);
-        boardDto = fromEntity(board);
+        boardDto = new BoardDto(board);
         return ApiResponseDto.success(HttpStatus.OK.value(), "S001", boardDto);
     }
 
     public ApiResponseDto<Long> deleteBoard(Long id, UserDetails userDetails) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(CustomErrorCode.RESOURCE_NOT_FOUND));
-        BoardDto boardDto = fromEntity(board);
+        BoardDto boardDto = new BoardDto(board);
         System.out.println("boardDto = " + boardDto.getUser());
         System.out.println("userDetails = " + boardDto.getUser());
         if (!Objects.equals(boardDto.getUser(), userDetails.getUsername())){
@@ -80,9 +73,7 @@ public class BoardService {
     public ApiResponseDto<BoardDto> updateBoard(BoardDto boardDto, UserDetails userDetails) {
         Board board = boardRepository.findById(boardDto.getId())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.RESOURCE_NOT_FOUND));
-        System.out.println("boardDto = " + board.getUser());
-        System.out.println("userDetails = " + userDetails.getUsername());
-        if (!Objects.equals(board.getUser(), userDetails.getUsername())){
+        if (!board.getUser().equals(userDetails.getUsername())){
             throw new CustomException(CustomErrorCode.UNVALID_ERROR);
         }
         board.update(boardDto);

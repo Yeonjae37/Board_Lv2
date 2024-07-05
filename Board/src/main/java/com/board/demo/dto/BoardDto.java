@@ -1,5 +1,6 @@
 package com.board.demo.dto;
 
+import com.board.demo.entity.Board;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
@@ -27,4 +28,15 @@ public class BoardDto {
     public int getViewcnt() { return viewcnt; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime geModifiedAt() { return modifiedAt; }
+
+    public BoardDto(Board board) {
+        this.id = board.getId();
+        this.title = board.getTitle();
+        this.content = board.getContent();
+        this.user = board.getUser();
+        this.viewcnt = board.getViewcnt();
+        this.createdAt = board.getCreatedAt();
+        this.modifiedAt = board.getModifiedAt();
+    }
+
 }

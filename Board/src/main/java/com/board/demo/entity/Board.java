@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@JsonIgnoreProperties(value = {"password"})
 public class Board {
     protected Board() {
     }
@@ -21,12 +20,6 @@ public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "USER_ID")
-    private Long id2;
-
-    @Column
-    private String type;
 
     @Column
     private String title;
@@ -53,8 +46,8 @@ public class Board {
         this.user = boardDto.getUser();
         this.content = boardDto.getContent();
         this.viewcnt = boardDto.getViewcnt();
-        this.createdAt = boardDto.getcreatedAt();
-        this.modifiedAt = boardDto.getmodifiedAt();
+        this.createdAt = boardDto.getCreatedAt();
+        this.modifiedAt = boardDto.getModifiedAt();
     }
 
     public void update(BoardDto boardDto) {

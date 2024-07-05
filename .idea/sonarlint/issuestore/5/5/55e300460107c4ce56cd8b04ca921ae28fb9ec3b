@@ -1,14 +1,10 @@
 
-§
-java:S1192-"fDefine a constant instead of duplicating this literal "ê²Œì‹œê¸€ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤." 3 times.(ÿœ›ıÿÿÿÿJ$34fc8a17-fbe6-44dc-9c18-17ea061095fa
-C
-java:S1452*"&Remove usage of generic wildcard type.(­û˜º8£ÎÁ„2
-C
-java:S14524"&Remove usage of generic wildcard type.(¶ï³¿8¥ÎÁ„2
-H
-java:S1452="&Remove usage of generic wildcard type.(ÒŸÌüÿÿÿÿ8ªÎÁ„2
-C
-java:S1452K"&Remove usage of generic wildcard type.(ıÉÂ¦8µÎÁ„2
-f	java:S106Y"+Replace this use of System.out by a logger.(…²Õ€J$a0f0018e-fde5-48b1-ba67-e53c0ce6a80e
-k	java:S106\"+Replace this use of System.out by a logger.(å·ß³ıÿÿÿÿJ$1155f40c-125d-4581-9c15-7b7e1f5370c2
-k	java:S106`"+Replace this use of System.out by a logger.(ôŸ®‰ùÿÿÿÿJ$548ec937-cc17-4583-a4f4-0c7daee1869c
+r	java:S1068"+Replace this use of System.out by a logger.(•’âåùÿÿÿÿ8É½ıˆ2J$dd0b05fd-feb7-4842-ab73-1e52f13007ca
+
+java:S1128"7Remove this unused import 'com.board.demo.entity.User'.(“ñ×Ùıÿÿÿÿ8§Óÿˆ2J$654ea6d6-7dc8-4511-bde2-97a4f7a89d40
+†
+java:S1128"DRemove this unused import 'jakarta.servlet.http.HttpServletRequest'.(õ38¨Óÿˆ2J$496d2b58-d497-46ab-9888-ffdb964dcaf8
+Œ
+java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8ªÓÿˆ2J$c2a5b0df-6da0-4301-9af9-c8b9c5316210
+¤
+java:S1128"aRemove this unused import 'org.springframework.security.core.annotation.AuthenticationPrincipal'.(Øù¢8«Óÿˆ2J$1093c81f-0848-4faf-a58c-280acb701971

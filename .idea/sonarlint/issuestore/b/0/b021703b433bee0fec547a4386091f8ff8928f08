@@ -1,7 +1,7 @@
 
-“	java:S117D"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éÖöı8Å£×å‡2J$eabeca4c-0092-433f-bfca-825886c6bb17
-E
-java:S54110"(Use a primitive boolean expression here.(É¬£8„ÊĞí‡2
-m	java:S106#"+Replace this use of System.out by a logger.(ÕæóÑ8İêÒå‡2J$8f4b140f-0272-49b8-84da-1860307b552a
-m	java:S106+"+Replace this use of System.out by a logger.(ñ”îÑ8İêÒå‡2J$089dff4a-a01b-4a9c-99ca-902087c1f452
-m	java:S1062"+Replace this use of System.out by a logger.(È´åÏ8ŞêÒå‡2J$3d1ab958-4b73-4eea-bab4-78a0c818275a
+“	java:S117D"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éÖöı8Å£×å‡2J$d8c172d4-4f6d-46a6-bf54-a337a68294fe
+k
+java:S54110"(Use a primitive boolean expression here.(É¬£8„ÊĞí‡2J$20e77edc-9114-4629-9952-a9b47296afcc
+m	java:S106#"+Replace this use of System.out by a logger.(ÕæóÑ8İêÒå‡2J$01866f48-a22f-4e89-88ee-2e94dcf5f927
+m	java:S106+"+Replace this use of System.out by a logger.(ñ”îÑ8İêÒå‡2J$db0b667b-b17b-4378-9073-02f8dc6a4900
+m	java:S1062"+Replace this use of System.out by a logger.(È´åÏ8ŞêÒå‡2J$4d17557f-a16b-4f96-bbc2-24d07df9c10e

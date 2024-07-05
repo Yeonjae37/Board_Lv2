@@ -1,24 +1,20 @@
 package com.board.demo.dto;
 
-import com.board.demo.entity.StatusEnum;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @Getter
 @Setter
-@JsonIgnoreProperties(value = {"password"})
 public class BoardDto {
     private Long id;
     private String title;
     private String content;
+    @Setter
     private String user;
     private int viewcnt;
     private LocalDateTime createdAt;
@@ -29,15 +25,6 @@ public class BoardDto {
     public String getContent() { return content; }
     public String getUser() { return user; }
     public int getViewcnt() { return viewcnt; }
-    public LocalDateTime getcreatedAt() { return createdAt; }
-    public LocalDateTime getmodifiedAt() { return modifiedAt; }
-
-    public void setcreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setmodifiedAt(LocalDateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }
-
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime geModifiedAt() { return modifiedAt; }
 }

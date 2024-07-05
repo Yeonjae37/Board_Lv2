@@ -1,19 +1,21 @@
 package com.board.demo.service;
 
+import com.board.demo.dto.ApiResponseDto;
 import com.board.demo.dto.BoardDto;
+import com.board.demo.dto.UserDetails;
 import com.board.demo.entity.Board;
-import com.board.demo.entity.StatusEnum;
+import com.board.demo.entity.User;
+import com.board.demo.exception.CustomErrorCode;
+import com.board.demo.exception.CustomException;
 import com.board.demo.repository.BoardRepository;
-import com.board.demo.util.ResponseUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.swing.text.html.Option;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +25,7 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    public List <Board> findAllBoards() {
+    public List<Board> findAllBoards() {
         return boardRepository.findAll();
     }
 
@@ -34,70 +36,63 @@ public class BoardService {
         boardDto.setContent(board.getContent());
         boardDto.setUser(board.getUser());
         boardDto.setViewcnt(board.getViewcnt());
-        boardDto.setcreatedAt(board.getCreatedAt());
-        boardDto.setmodifiedAt(board.getModifiedAt());
+        boardDto.setCreatedAt(board.getCreatedAt());
+        boardDto.setModifiedAt(board.getModifiedAt());
         return boardDto;
     }
 
-    public ResponseEntity<?> getBoard(Long id){
+    public ApiResponseDto<BoardDto> getBoard(Long id) {
         Optional<Board> boardOptional = boardRepository.findById(id);
-        if (!boardOptional.isPresent()){
-            return ResponseEntity.badRequest().body("게시글을 찾을 수 없습니다.");
+        if (!boardOptional.isPresent()) {
+            throw new CustomException(CustomErrorCode.INVALID_CODE);
         }
         Board board = boardOptional.get();
         BoardDto boardDto = fromEntity(board);
-        return ResponseUtil.createResponse(boardDto, StatusEnum.OK, "게시글 가져오기 성공", HttpStatus.OK);
+        return ApiResponseDto.success(HttpStatus.OK.value(), "S001", boardDto);
     }
 
-    public ResponseEntity<?> addBoard(BoardDto boardDto) {
+    public ApiResponseDto<BoardDto> addBoard(BoardDto boardDto, UserDetails userDetails) {
         LocalDateTime currentDateTime = LocalDateTime.now();
-        boardDto.setcreatedAt(currentDateTime);
+        System.out.println("user is" + userDetails);
+        boardDto.setCreatedAt(currentDateTime);
+        boardDto.setUser(userDetails.getUsername());
         Board board = new Board(boardDto);
         board = boardRepository.save(board);
         boardDto = fromEntity(board);
-        return ResponseUtil.createResponse(boardDto, StatusEnum.OK, "게시글 올리기 성공", HttpStatus.OK);
+        return ApiResponseDto.success(HttpStatus.OK.value(), "S001", boardDto);
     }
 
-    public ResponseEntity<?> deleteBoard(Long id, String pw) {
+    public ApiResponseDto<Long> deleteBoard(Long id, String pw) {
         Optional<Board> board = boardRepository.findById(id);
         if (!board.isPresent()) {
-            return ResponseEntity.badRequest().body("게시글을 찾을 수 없습니다.");
+            throw new CustomException(CustomErrorCode.RESOURCE_NOT_FOUND);
         }
         String storedPassword = boardRepository.findPasswordById(id);
         if (!storedPassword.equals(pw)) {
-            return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다.");
+            throw new CustomException(CustomErrorCode.PASSWORD_ERROR);
         }
         boardRepository.delete(board.get());
-        return ResponseEntity.ok("ok");
+        return ApiResponseDto.success(HttpStatus.OK.value(), "S001", id);
     }
 
     @Transactional
-    public ResponseEntity<?> updateBoard(BoardDto boardDto){
+    public ApiResponseDto<BoardDto> updateBoard(BoardDto boardDto) {
         Optional<Board> boardOptional = boardRepository.findById(boardDto.getId());
         if (!boardOptional.isPresent()) {
-            return ResponseEntity.badRequest().body("게시글을 찾을 수 없습니다.");
+            throw new CustomException(CustomErrorCode.RESOURCE_NOT_FOUND);
         }
         Board board = boardOptional.get();
         //Optional 은 null이 될 수 있는 객체를 감싸는데 사용되는데 Optional 객체에서 직접 getPassword를
         // 호출 할 수 없기 때문에 메서드를 호출하기 전에 Optional에서 실제 Board 객체를 추출해야 함
         board.update(boardDto);
-        return ResponseUtil.createResponse(boardDto, StatusEnum.OK, "게시글 수정 성공", HttpStatus.OK);
+        return ApiResponseDto.success(HttpStatus.OK.value(), "S001", boardDto);
     }
 
-    public boolean validCondition(BoardDto boardDto) {
+    public void validCondition(BoardDto boardDto) {
         if (boardDto.getTitle() == null) {
-            System.out.println("타이틀이 비어있습니다.");
-            return false;
+            throw new CustomException(CustomErrorCode.NO_TITLE);
         } else if (boardDto.getContent() == null) {
-            System.out.println("내용이 비어있습니다.");
-            return false;
-        }
-        else if (boardDto.getUser() == null) {
-            System.out.println("작성자가 비어있습니다.");
-            return false;
-        }
-        else {
-            return true;
+            throw new CustomException(CustomErrorCode.NO_CONTENT);
         }
     }
 }
